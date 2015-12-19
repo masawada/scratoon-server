@@ -1,0 +1,19 @@
+{
+  "version": 3,
+  "sources": [
+    "node_modules/browser-pack/_prelude.js",
+    "src/data.json",
+    "src/ext.js",
+    "src/main.js"
+  ],
+  "names": [],
+  "mappings": "AAAA;ACAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;;;;;;;ACfA,IAAM,QAAQ,GAAG,yCAAyC,CAAA;;AAE1D,IAAI,GAAG,GAAG;AACR,WAAS,EAAE,mBAAS,IAAI,EAAE,KAAK,EAAE;AAC/B,QAAI,IAAI,GAAG,IAAI,QAAQ,EAAE,CAAA;AACzB,QAAI,CAAC,MAAM,CAAC,MAAM,EAAE,IAAI,CAAC,CAAA;AACzB,QAAI,CAAC,MAAM,CAAC,OAAO,EAAE,KAAK,CAAC,CAAA;;AAE3B,SAAK,CAAC,QAAQ,EAAE;AACd,YAAM,EAAE,MAAM;AACd,UAAI,EAAE,IAAI;AACV,iBAAW,EAAE,MAAM;KACpB,CAAC,CAAC,IAAI,CAAC,UAAA,GAAG,EAAI;AACb,WAAK,CAAC,QAAQ,CAAC,CAAA;KAChB,CAAC,CAAA;GACH;CACF,CAAA;;QAEQ,GAAG,GAAH,GAAG;;;;;;;IClBA,IAAI;;;;;;AAGhB,CAAC,UAAS,CAAC,EAAE,GAAG,EAAE,IAAI,EAAE;;;AAGtB,MAAI,SAAS,GAAG,MAAM,CAAC,QAAQ,CAAC,MAAM,CAAC,OAAO,CAAC,UAAU,EAAE,EAAE,CAAC,CAAC,KAAK,CAAC,GAAG,CAAC,CAAA;AACzE,MAAI,IAAI,GAAG,IAAI,CAAC;AAChB,WAAS,CAAC,OAAO,CAAC,UAAA,QAAQ,EAAI;AAC5B,QAAI,IAAI,GAAG,QAAQ,CAAC,KAAK,CAAC,GAAG,CAAC,CAAA;AAC9B,QAAI,IAAI,CAAC,MAAM,GAAG,CAAC,IAAI,IAAI,CAAC,CAAC,CAAC,IAAI,MAAM,EACtC,IAAI,GAAG,IAAI,CAAC,CAAC,CAAC,CAAC;GAClB,CAAC,CAAA;;AAEF,QAAM,CAAC,IAAI,CAAC,GAAG,CAAC,CAAC,OAAO,CAAC,UAAC,GAAG,EAAK;AAChC,KAAC,CAAC,GAAG,CAAC,GAAG,GAAG,CAAC,GAAG,CAAC,CAAA;GAClB,CAAC,CAAA;;AAEF,mBAAiB,CAAC,QAAQ,CAAC,IAAI,CAAC,KAAK,EAAE,IAAI,CAAC,UAAU,CAAC,IAAI,CAAC,EAAE,CAAC,CAAC,CAAA;CACjE,CAAA,CAAE,EAAE,OAlBI,GAAG,EAkBA,IAAI,CAAC,CAAC",
+  "file": "generated.js",
+  "sourceRoot": "",
+  "sourcesContent": [
+    "(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require==\"function\"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error(\"Cannot find module '\"+o+\"'\");throw f.code=\"MODULE_NOT_FOUND\",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require==\"function\"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})",
+    "module.exports={\n  \"title\": \"scratoon\",\n  \"descriptor\": {\n    \"en\": {\n      \"blocks\": [\n        [\" \", \"send %s's score ( %n point )\", \"sendScore\", \"anonymous\", 0]\n      ]\n    },\n    \"ja\": {\n      \"blocks\": [\n        [\" \", \"%s の スコア ( %n ポイント ) を送る\", \"sendScore\", \"anonymous\", 0]\n      ]\n    }\n  }\n}\n",
+    "const ENDPOINT = 'https://scratoon.herokuapp.com/register'\n\nlet ext = {\n  sendScore: function(name, point) {\n    var data = new FormData()\n    data.append('name', name)\n    data.append('point', point)\n\n    fetch(ENDPOINT, {\n      method: 'post',\n      body: data,\n      credentials: 'cors'\n    }).then(res => {\n      alert('送信しました')\n    })\n  }\n}\n\nexport { ext }\n",
+    "import * as data from \"./data.json\"\nimport { ext as ext } from \"./ext.js\"\n\n(function(e, ext, data) {\n  // Check for GET param 'lang'\n  // codes from https://github.com/khanning/scratch-arduino-extension/blob/da1ab317a215a8c1c5cda1b9db756b9edc14ba68/arduino_extension.js#L533-L541\n  let variables = window.location.search.replace(/^\\?|\\/$/g, '').split('&')\n  var lang = 'en';\n  variables.forEach(variable => {\n    let pair = variable.split('=')\n    if (pair.length > 1 && pair[0] == 'lang')\n      lang = pair[1];\n  })\n\n  Object.keys(ext).forEach((key) => {\n    e[key] = ext[key]\n  })\n\n  ScratchExtensions.register(data.title, data.descriptor[lang], e)\n})({}, ext, data);\n"
+  ]
+}
