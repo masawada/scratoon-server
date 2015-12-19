@@ -19,8 +19,11 @@ helpers do
   def register_score(name, point)
     $score_board << {
       holder: name,
-      point: point
+      point: point.to_i
     }
+
+    new_score_board = $score_board.sort_by{|item| item[1]}.reverse
+    $score_board = new_score_board.slice(0, 30)
   end
 end
 
