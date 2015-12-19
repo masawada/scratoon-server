@@ -49,14 +49,31 @@ __END__
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>Scratoon</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body>
-  <h1>Leaderboard</h1>
-  <% score_board.each do |score| %>
-    <%= score[:holder] %>
-    <%= score[:point] %>
-  <% end %>
+  <div class="container">
+    <h1>Leaderboard</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% score_board.each_with_index do |score, index| %>
+        <tr>
+          <th scope="row"><%= index + 1 %></th>
+          <td><%= score[:holder] %></td>
+          <td><%= score[:point] %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>
 
